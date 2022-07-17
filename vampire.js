@@ -24,7 +24,7 @@ class Vampire {
     let distanceFromOriginal = 0;
     let currentVampire = this;
     while (currentVampire.creator) {
-      currentVampire = currentVampire.creator
+      currentVampire = currentVampire.creator;
       distanceFromOriginal++;
     }
     return distanceFromOriginal;
@@ -53,18 +53,36 @@ class Vampire {
 
   // Returns the vampire object with that name, or null if no vampire exists with that name
   vampireWithName(name) {
-    
+    if (this.name === name) {
+      return this;
+    }
+    for (const offspring of this.offspring) {
+      const vampire = offspring.vampireWithName(name);
+      if (vampire) {
+        return vampire;
+      }
+    }
+    return null;
   }
 
   // Returns the total number of vampires that exist
   get totalDescendents() {
-    
+    return this.offspring.reduce((a,c) => a + c.totalDescendents, this.offspring.length);
   }
 
   // Returns an array of all the vampires that were converted after 1980
   get allMillennialVampires() {
-    
+    const yearConvertedList = [];
+    if (this.yearConverted && this.yearConverted > 1980) {
+      yearConvertedList.push(this);
+    }
+    for (const offspring of this.offspring) {
+      yearConvertedList.push(...offspring.allMillennialVampires);
+    }
+    return yearConvertedList;
   }
+
+  
 
   /** Stretch **/
 
@@ -109,4 +127,3 @@ class Vampire {
 }
 
 module.exports = Vampire;
-

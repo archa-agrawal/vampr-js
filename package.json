@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha",
+    "lint": "eslint --fix './**/*.js'"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.1.2",
+    "eslint": "^8.20.0",
     "mocha": "^4.0.1"
   }
 }
